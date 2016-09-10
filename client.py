@@ -1,27 +1,30 @@
-from socketIO_client import SocketIO, BaseNamespace
+from ws4py.client.threadedclient import WebSocketClient
 
-host = "li1013-216.members.linode.com"
-port = 5000
 
-class Namespace(BaseNamespace):
+class DummyClient(WebSocketClient):
+    def opened(self):
+        def data_provider():
+            for i in range(1, 200, 25):
+                yield "#" * i
 
-    def on_connect(self):
-        print('[Connected]')
+        self.send(data_provider())
 
-socketIO = SocketIO(host, port, Namespace)
-socketIO.wait(seconds=1)
+        for i in range(0, 200, 25):
+            print i
+            self.send("*" * i)
 
-with SocketIO(host, port, Namespace) as socketIO:
-    socketIO.emit('aaa')
-    socketIO.wait(seconds=1)
+    def closed(self, code, reason=None):
+        print "Closed down", code, reason
 
-print host
-print port
+    def received_message(self, m):
+        print m
+        if len(m) == 175:
+            self.close(reason='Bye bye')
 
-def on_connection(*args):
-    print('connected', args)
-
-socketIO.on('cook', on_connection)
-socketIO.emit('bbb')
-socketIO.emit('ccc')
-socketIO.wait(seconds=1)
+if __name__ == '__main__':
+    try:
+        ws = DummyClient('ws://http://li1013-216.members.linode.com:5000/', protocols=['http-only', 'chat'])
+        ws.connect()
+        ws.run_forever()
+    except KeyboardInterrupt:
+        ws.close()
