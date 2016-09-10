@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-arduino_conn = serial.Serial("/dev/ttyAMA0", 9600, timeout=1)
+arduino_conn = serial.Serial("/dev/ttyUSB0", 9600, timeout=1)
 arduino_conn.flushInput()
 arduino_conn.flushOutput()
 cook = False
@@ -25,7 +25,7 @@ def cook():
     print("Cook Egg Before")
     global cook
     cook = True
-    arduino_conn.write("1\r")
+    arduino_conn.write("1")
     print("Cook Egg After")
     return "Cooking an Egg"
 
