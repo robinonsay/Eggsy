@@ -16,6 +16,8 @@ print "socket connected!!!"
 
 while 1:
     data = s.recv(1024)
-    if not data: break
+    print data
+    if not data:
+        break
     s.send(data)
 s.close()                    # Close the socket when done
