@@ -20,7 +20,7 @@ f = None
 while nreceive and ticks < 101:#try to get the info 100 times or until it's received
     ticks+=1
     try:
-        f = mysocket.makefile('rb')
+        f = s.makefile('rb')
         if not f == None:
             nreceive = False
     except:
