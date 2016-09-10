@@ -27,9 +27,6 @@ def cook():
     print("Cook Egg After")
     return "Cooking an Egg"
 
-def main_routine():
-    socketio.run(app, host='0.0.0.0')
-
 def serial_comm():
     global cook
     while True:
@@ -40,8 +37,10 @@ def serial_comm():
         else:
             time.sleep(2)
 
-t1 = Thread(target=main_routine)
+# t1 = Thread(target=main_routine)
 #t2 = Thread(target=serial_comm)
 
-t1.start()
+# t1.start()
 #t2.start()
+#
+socketio.run(app, host='0.0.0.0')
