@@ -34,8 +34,8 @@ def serial_comm():
         else:
             time.sleep(2)
 
-t1 = Thread.join(target=main_routine)
-t2 = Thread.join(target=serial_comm)
+t1 = Thread(target=main_routine)
+t2 = Thread(target=serial_comm)
 
 t1.start()
 t2.start()
