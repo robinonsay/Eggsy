@@ -1,11 +1,15 @@
-import json
 from flask import Flask, render_template
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from threading import Thread
 import serial
 import time
+import json
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
+
 arduino_conn = serial.Serial("/dev/ttyAMA0", 9600, timeout=None)
 cook = False
 
@@ -23,7 +27,7 @@ def cook():
     return json.dumps(message)
 
 def main_routine():
-    app.run(app, host='0.0.0.0')
+    socketio.run(app, host='0.0.0.0')
 
 def serial_comm():
     global cook
