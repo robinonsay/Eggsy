@@ -7,8 +7,7 @@ socketIO = SocketIO(host, port, LoggingNamespace)
 print host
 print port
 
-socketIO.on('connection', on_connection)
-
-
 def on_connection(*args):
     print('connected', args)
+    
+socketIO.on('connection', on_connection)
