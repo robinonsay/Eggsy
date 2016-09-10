@@ -1,4 +1,4 @@
-from socketIO_client import *
+from socketIO_client import SocketIO, BaseNamespace
 
 host = "li1013-216.members.linode.com"
 port = 5000
