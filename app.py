@@ -11,8 +11,8 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 arduino_conn = serial.Serial("/dev/ttyAMA0", 9600, timeout=1)
-while arduino_conn.inWaiting()>0:
-    arduino_conn.read(1)
+arduino_conn.flushInput()
+arduino_conn.flushOutput()
 cook = False
 
 @app.route('/')
