@@ -11,6 +11,8 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 arduino_conn = serial.Serial("/dev/ttyAMA0", 9600, timeout=1)
+while arduino_conn.inWaiting()>0:
+    arduino_conn.read(1)
 cook = False
 
 @app.route('/')
@@ -43,4 +45,5 @@ def serial_comm():
 # t1.start()
 #t2.start()
 #
+arduino_conn.open()
 socketio.run(app, host='0.0.0.0')
