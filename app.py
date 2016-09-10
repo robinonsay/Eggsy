@@ -20,10 +20,11 @@ def hello_world():
 
 @app.route('/cook/')
 def cook():
-    print("Cook Egg")
+    print("Cook Egg Before")
     global cook
     cook = True
     arduino_conn.write("1")
+    print("Cook Egg After")
     return "Cooking an Egg"
 
 def main_routine():
