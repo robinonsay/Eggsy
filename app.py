@@ -23,7 +23,7 @@ def cook():
     print("Cook Egg Before")
     global cook
     cook = True
-    arduino_conn.write("1")
+    arduino_conn.write(b"1")
     print("Cook Egg After")
     return "Cooking an Egg"
 
