@@ -1,3 +1,4 @@
+import json
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 
@@ -7,7 +8,7 @@ socketio = SocketIO(app)
 
 
 def ack():
-    print("recieved")
+    print("Recieved Callback")
 
 @app.route('/')
 def hello_world():
@@ -16,31 +17,32 @@ def hello_world():
 
 @app.route('/cook/')
 def cook():
-    print("Sending")
-    emit('response', {'data': 'Sending From Server on cook'}, namespace='/', broadcast=True)
-    return "Sent"
+    print("Cook Egg")
+    message = {'data':'Cook Egg', 'cook': True}
+    emit('cook', message, namespace='/', broadcast=True)
+    return json.dumps(message)
 
 @socketio.on('join')
 def on_join(data):
+    message = {'data':'Joined Room', 'cook': False}
     room = data['room']
     join_room(room)
-    send({'data': 'Sending From Server'},json=True, room=room)
+    send(json.dumps(message),json=True, room=room)
 
 @socketio.on('leave')
 def on_leave(data):
     room = data['room']
     leave_room(room)
-    send(username + ' has left the room.', room=room)
+    send({'cook': False},json=True, room=room)
 
 @socketio.on('test response')
 def handle_my_custom_event(json):
     print('received response: ' + str(json))
 
-@socketio.on('my event')
-def handle_my_custom_event(json):
-    send({'data': 'Sending From Server'}, json=True, callback=ack)
-    print('received json: ' + str(json))
+@socketio.on('connection')
+def handle_connection(json):
+    send({'data': 'Server Connected'}, json=True, callback=ack)
+    print('received connection json from client: ' + str(json))
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0')
-
