@@ -23,7 +23,7 @@ def cook():
     print("Cook Egg")
     global cook
     cook = True
-    return json.dumps(message)
+    return "Cooking an Egg"
 
 def main_routine():
     socketio.run(app, host='0.0.0.0')
