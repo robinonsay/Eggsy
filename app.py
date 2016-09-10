@@ -19,7 +19,7 @@ def hello_world():
 def cook():
     print("Cook Egg")
     message = {'data':'Cook Egg', 'cook': True}
-    emit(message, namespace='/', broadcast=True)
+    emit(args=message, namespace='/', broadcast=True)
     return json.dumps(message)
 
 @socketio.on('join')
