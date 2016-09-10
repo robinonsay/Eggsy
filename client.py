@@ -8,7 +8,7 @@ class Namespace(BaseNamespace):
     def on_connect(self):
         print('[Connected]')
 
-socketIO = SocketIO(host, port, LoggingNamespace)
+socketIO = SocketIO(host, port, Namespace)
 socketIO.wait(seconds=1)
 
 print host
