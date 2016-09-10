@@ -6,7 +6,7 @@ import time
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-arduino_conn = serial.Serial("...", 9600, timeout=None)
+arduino_conn = serial.Serial("/dev/ttyUSB0", 9600, timeout=None)
 cook = False
 
 @app.route('/')
