@@ -20,7 +20,6 @@ def hello_world():
 
 @app.route('/cook/')
 def cook():
-    print "TIME %s"%request.args.get('time')
     print("Cook Egg")
     global cook
     cook = True
