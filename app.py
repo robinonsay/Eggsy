@@ -45,6 +45,6 @@ def serial_comm():
 # t1.start()
 #t2.start()
 #
-if is not arduino_conn.is_open:
+if not arduino_conn.is_open:
     arduino_conn.open()
 socketio.run(app, host='0.0.0.0')
