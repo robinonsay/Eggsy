@@ -5,8 +5,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-if __name__ == '__main__':
-    socketio.run(app)
 
 def ack():
     print("recieved")
@@ -42,3 +40,7 @@ def handle_my_custom_event(json):
 def handle_my_custom_event(json):
     send({'data': 'Sending From Server'}, json=True, callback=ack)
     print('received json: ' + str(json))
+
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0')
+
