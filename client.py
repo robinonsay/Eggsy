@@ -15,10 +15,11 @@ s.connect((host,port))
 print "socket connected!!!"
 s.send("Python is Connected")
 
-r, _, _ = select.select([self.conn], [], [])
-if r:
-    print "There is data"
+
+while 1:
     data = s.recv(1024)
     print data
+    if not data:
+        break
     s.send(data)
 s.close()                    # Close the socket when done
