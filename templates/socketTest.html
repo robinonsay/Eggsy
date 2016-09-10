@@ -140,7 +140,7 @@
             var sendCookRequest = function(cookTime){
                 var url = cookUrl + cookTime;
                 $.get(cookUrl,function(data){
-                    alert('Cooking!' + target.innerHTML);
+                    console.log('Cooking! ' + target.innerHTML + " : "+ data);
                 });
             };
             switch (target.innerHTML) {
