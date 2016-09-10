@@ -6,7 +6,7 @@ import time
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-arduino_conn = serial.Serial("/dev/ttyUSB0", 9600, timeout=None)
+arduino_conn = serial.Serial("/dev/ttyAMA0", 9600, timeout=None)
 cook = False
 
 @app.route('/')
@@ -16,6 +16,7 @@ def hello_world():
 
 @app.route('/cook/')
 def cook():
+    print "TIME %s"%request.args.get('time')
     print("Cook Egg")
     global cook
     cook = True

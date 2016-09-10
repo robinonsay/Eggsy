@@ -134,11 +134,12 @@
     <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         // sockets();
-        var cookUrl = 'http://' + document.domain + ':' + location.port + '/cook/';
+        var cookUrl = 'http://' + document.domain + ':' + location.port + '/cook?time=';
         $('.options button').click(function(e){
             var target = event.target || event.srcElement;
             var sendCookRequest = function(cookTime){
-                $.get(cookUrl,{time:cookTime},function(data){
+                var url = cookUrl + cookTime;
+                $.get(cookUrl,function(data){
                     alert('Cooking!' + target.innerHTML);
                 });
             };
