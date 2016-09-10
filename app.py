@@ -23,6 +23,7 @@ def cook():
     print("Cook Egg")
     global cook
     cook = True
+    arduino_conn.write("1")
     return "Cooking an Egg"
 
 def main_routine():
@@ -39,7 +40,7 @@ def serial_comm():
             time.sleep(2)
 
 t1 = Thread(target=main_routine)
-t2 = Thread(target=serial_comm)
+#t2 = Thread(target=serial_comm)
 
 t1.start()
-t2.start()
+#t2.start()
