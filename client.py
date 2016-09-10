@@ -15,7 +15,7 @@ s.connect((host,port))
 print "socket connected!!!"
 
 while 1:
-    data = conn.recv(1024)
+    data = s.recv(1024)
     if not data: break
-    conn.send(data)
-conn.close()                    # Close the socket when done
+    s.send(data)
+s.close()                    # Close the socket when done
