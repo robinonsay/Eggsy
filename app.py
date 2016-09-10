@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
-arduino_conn = serial.Serial("/dev/ttyAMA0", 9600, timeout=None)
+arduino_conn = serial.Serial("/dev/ttyAMA0", 9600, timeout=1)
 cook = False
 
 @app.route('/')
