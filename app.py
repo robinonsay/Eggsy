@@ -1,11 +1,18 @@
 import json
+import socket
 from flask import Flask, render_template
-from flask_socketio import SocketIO, send, emit, join_room, leave_room
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
+
+
+s = socket.socket()
+host = socket.gethostname()
+port = 12
+s.bind((host,port))
+s.listen(5)
 
 def ack():
     print("Recieved Callback")
@@ -29,20 +36,12 @@ def on_join(data):
     join_room(room)
     send(json.dumps(message),json=True, room=room)
 
-@socketio.on('leave')
-def on_leave(data):
-    room = data['room']
-    leave_room(room)
-    send({'cook': False},json=True, room=room)
-
-@socketio.on('test response')
-def handle_my_custom_event(json):
-    print('received response: ' + str(json))
-
-@socketio.on('connection')
-def handle_connection(json):
-    send({'data': 'Server Connected'}, json=True, callback=ack)
-    print('received connection json from client: ' + str(json))
-
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0')
+    while True:
+        c, addr = s.accept()
+        print("Connection accepted from " + repr(addr[1]))
+
+        c.send("Server approved connection\n")
+        print repr(addr[1]) + ": " + c.recv(1026)
+        c.close()
