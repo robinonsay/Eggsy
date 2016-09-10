@@ -11,10 +11,17 @@ class Namespace(BaseNamespace):
 socketIO = SocketIO(host, port, Namespace)
 socketIO.wait(seconds=1)
 
+with SocketIO(host, port, Namespace) as socketIO:
+    socketIO.emit('aaa')
+    socketIO.wait(seconds=1)
+
 print host
 print port
 
 def on_connection(*args):
     print('connected', args)
 
-socketIO.on('connection', on_connection)
+socketIO.on('cook', on_connection)
+socketIO.emit('bbb')
+socketIO.emit('ccc')
+socketIO.wait(seconds=1)
