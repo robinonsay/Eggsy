@@ -32,6 +32,7 @@ def serial_comm():
     global cook
     while True:
         if cook:
+            print "Writing to pi"
             arduino_conn.write("1")
             cook = False
         else:
