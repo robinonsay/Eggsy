@@ -14,5 +14,5 @@ s.connect((host,port))
 
 print "socket connected!!!"
 
-print s.recv(1024)
+print s.recv(8192)
 s.close                     # Close the socket when done
