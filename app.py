@@ -18,7 +18,7 @@ cook = False
 @app.route('/')
 def hello_world():
     print('root called')
-    return render_template('socketTest.html')
+    return render_template('index.html')
 
 @app.route('/cook/', methods=['GET'])
 def cook():
