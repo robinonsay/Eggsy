@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from threading import Thread
 import serial
@@ -20,8 +20,10 @@ def hello_world():
     print('root called')
     return render_template('socketTest.html')
 
-@app.route('/cook/')
+@app.route('/cook/', methods=['GET'])
 def cook():
+    type = request.args.get('type')
+    print("TYPE: %s"%type)
     print("Cook Egg Before")
     global cook
     cook = True

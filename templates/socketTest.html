@@ -136,12 +136,12 @@
     <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         // sockets();
-        var cookUrl = 'http://' + document.domain + ':' + location.port + '/cook?time=';
+        var cookUrl = 'http://' + document.domain + ':' + location.port + '/cook?type=';
         $('.options button').click(function(e){
             var target = event.target || event.srcElement;
             var sendCookRequest = function(cookTime){
                 startTimer(cookTime);
-                var url = cookUrl + cookTime;
+                var url = cookUrl + target.innerHTML;
                 $.get(cookUrl,function(data){
                     console.log('Cooking! ' + target.innerHTML + " : "+ data);
                 });
