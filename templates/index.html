@@ -34,6 +34,15 @@
         .options button:focus{
             outline: none;
         }
+        .timer{
+            background: rgba(51,51,51,1);
+            color: #EEE;
+            font-size: 2em;
+            padding: 5em;
+            margin-top: 3em;
+            margin-bottom: 3em;
+            border-radius: 10em;
+        }
     </style>
 </head>
 <body>
@@ -127,6 +136,13 @@
           </div>
         </div>
     </div>
+    <div class="container-fluid text-center">
+        <div class="row">
+            <div class="timer col-md-offset-4 col-md-4" hidden>
+            <p id="time">0:00</p>
+            </div>
+        </div>
+    </div>
     <!-- Scripts -->
     <div>
     <script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
@@ -138,6 +154,8 @@
         // sockets();
         var cookUrl = 'http://' + document.domain + ':' + location.port + '/cook?type=';
         $('.options button').click(function(e){
+            $('.options').hide();
+            $('.timer').show();
             var target = event.target || event.srcElement;
 
             var sendCookRequest = function(cookTime){
@@ -151,26 +169,63 @@
 
             switch (target.innerHTML) {
                 case 'Overhard':
-                    sendCookRequest(50);
+                    sendCookRequest(5);
                     break;
                 case 'Overmedium':
-                    sendCookRequest(40);
+                    sendCookRequest(4);
                     break;
                 case 'Overeasy':
-                    sendCookRequest(30);
+                    sendCookRequest(3);
                     break;
                 case 'Scrambled':
-                    sendCookRequest(12);
+                    sendCookRequest(1.2);
                     break;
                 case 'Hardboiled':
-                    sendCookRequest(10);
+                    sendCookRequest(0.1);
                     break;
             }
         });
     });
 
-    var startTimer = function(){
+    var startTimer = function(time){
+        var myTime = time;
+        var timer = window.setInterval(function(){
+            myTime -= 1/60;
+            var mins = parseInt(myTime);
+            var secs = myTime * 60;
+            secs = parseInt(secs - mins*60);
+            if(secs > 9){
+                $('#time').text( mins + ":" +  secs);
+            }else{
+                $('#time').text( mins + ":0" +  secs);    
+            }
 
+        }, 1000);
+        window.setTimeout(function(){
+            window.clearInterval(timer);
+            $('.options').show();
+            $('.timer').hide();
+            // notifyEggDone();
+            alert("Eggs Are Ready!");
+        }, time*60000);
+    }
+
+    var notifyEggDone = function() {
+        if (Notification.permission === "granted") {
+            // If it's okay let's create a notification
+            var notification = new Notification('Eggs Are Ready', {
+              body: "Hey, go to your Eggsy, Your eggs are ready!",
+            });
+        }else if (Notification.permission !== 'denied' || Notification.permission === "default") {
+            Notification.requestPermission(function (permission) {
+              // If the user accepts, let's create a notification
+              if (permission === "granted") {
+                  var notification = new Notification('Eggs Are Ready', {
+                    body: "Hey, go to your Eggsy, Your eggs are ready!",
+                  });
+              }
+            });
+        }
     }
 
     var sockets = function(){
