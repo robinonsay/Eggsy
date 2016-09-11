@@ -23,7 +23,7 @@ def hello_world():
 @app.route('/cook/', methods=['GET'])
 def cook():
     type = request.args.get('type')
-    print("TYPE: %s"%type)
+    print("TYPE: %s"%json.dumps(type))
     print("Cook Egg Before")
     global cook
     cook = True
