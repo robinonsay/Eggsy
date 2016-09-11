@@ -27,7 +27,7 @@ def cook():
     cook = True
     arduino_conn.write("1")
     print("Cook Egg After")
-    return "Cooking an Egg"
+    return {"message":"Cooking an Egg"}
 
 def serial_comm():
     global cook
